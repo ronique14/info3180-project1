@@ -1,0 +1,73 @@
+﻿{% extends "base.html" %}
+
+{% block header %}
+<h1>{% block title %}Property{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+{% for detail in properties %}
+<h1>Property</h1>
+<div class="row">
+    <div class="col-12 col-lg-9 mx-auto my-3 property-details-box">
+        <div class="row col-12 details-top-box">
+            <span class="top-address col-md-6">{{detail.address}} {{detail.address2}}</span>
+            <span class="details-price col-md-6">
+                {% if detail.rent_price %}
+                <div>JMD{{detail.rent_price}} </div>
+                {% else %}
+                <div>JMD{{detail.sale_price}}</div>
+                {% endif %}
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-7 property-image-box">
+                {% if detail.imgUrl %}
+                <img src="{{ detail.imgUrl }}"  alt="Property Image">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/no-image.png') }}"
+                      alt="Property Image">
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+                <div class="col-12">
+                    <div class="row justify-content-center">
+                        <div class="details-description-title">
+                            <span>Property Summary</span>
+                        </div>
+                    </div>
+                    <div class="row col-12 summary-list-box">
+                        <ul class="col-12 summary-list">
+                            <li class="d-flex justify-content-between">
+                                <strong>Address:</strong>
+                                <span>{{detail.address}}</span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <strong>Property Type:</strong>
+                                <span>{{detail.property_type}}</span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <strong>Status:</strong>
+                                {% if detail.rent_price != null %}
+                                <span>For Rent</span>
+                                {% else %}
+                                <span>For Sale</span>
+                                {% endif %}
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <strong>Beds:</strong>
+                                <span>{{detail.num_bed}}</span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <strong>Baths:</strong>
+                                <span>{{detail.num_bath}}</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        {% endfor %}
+        {% endblock %}

@@ -1,0 +1,91 @@
+﻿﻿
+{% extends "base.html" %}
+    {% block header %}
+<h1>{% block title %}Property{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <h1>Add New Property</h1>
+    <form action="" method="post">
+        {{form.hidden_tag()}}
+        {{ form.csrf_token }}
+
+        <div class="form-group m-5">
+            {{form.title.label()}}
+            {{form.title(class="form-control")}}
+            <ul>
+                {% for error in form.title.errors %}
+                <li style="color:red;">{{error}} </li>
+                {%endfor %}
+            </ul>
+        </div>
+        <!-- Category RENT OR BUY -->
+        <ul>
+            <li class="nav-item">
+                <a>For Sale</a>
+            </li>
+            <li class="nav-item">
+                <a>For Rent</a>
+            </li>
+        </ul>
+        <!-- Property Type -->
+        <div class="input-group mb-3">
+            <select class="custom-select" id="property_type" name="property_type" required>
+                <option value="" disabled selected>Property Type</option>
+                {% for type in types %}
+                <option value="{{ type }}">{{ type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Beds -->
+        <div class="input-group mb-3">
+            <select class="custom-select" id="num_bed" name="num_bed" required>
+                <option value="" disabled selected>Beds</option>
+                {% for beds in num_bed %}
+                <option value="{{ beds }}">{{ beds }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Baths -->
+        <div class="input-group mb-3">
+            <select class="custom-select" id="num_bath" name="num_bath" required>
+                <option value="" disabled selected>Baths</option>
+                {% for baths in num_bath %}
+                <option value="{{ baths }}">{{ baths }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="address" name="address" style="text-transform: capitalize;"
+                   placeholder="Address" pattern="[a-zA-Z0-9\s]{3,}"
+                   title="Only letters and numbers. min lengh 3 characters." required>
+        </div>
+        <!-- Price -->
+        <div class="form-group for-sale-div required">
+            <span>Please inform the price for sale</span><br>
+            <input type="number" min="1" step="any" name="sale_price" placeholder="JMD">
+        </div>
+        <div class="form-group for-rent-div required">
+            <span>Please inform the monthly rent price</span><br>
+            <input type="number" min="1" step="any" name="rent_price" placeholder="JMD"><span> pcm</span>
+        </div>
+        <!-- Description -->
+        <div class="form-group">
+            <textarea class="form-control" rows="7" id="description" name="description" placeholder="Description"
+                      required></textarea>
+        </div>
+        <!-- Image -->
+        <div class="form-group">
+            <span>Please add a link to the photo of the property - Optional</span>
+            <input id="imgUrl" name="imgUrl" class="form-control" type="url" maxlength="150"
+                   placeholder="https://...">
+        </div>
+        <!-- Add Property button -->
+        <div class="add-property-button">
+            <button type="submit" class="btn btn-dark btn-block mb-3 mx-2">Add</button>
+            <!-- Cancel Button -->
+            <a class="btn btn-dark btn-block mb-3 mx-2" href={{ url_for( 'properties.my_ads') }}>Cancel</a>
+        </div>
+    </form>
+
+{% endblock %}
